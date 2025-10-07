@@ -13,19 +13,19 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 0 80% 35%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --primary: 0 85% 74%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 188 75% 67%;
+    --secondary-foreground: 0 0% 100%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 188 75% 67%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 0 80% 35%;
+    --border: 0 50% 85%;
+    --input: 0 50% 85%;
+    --ring: 0 85% 74%;
     --radius: 1rem;
   }
 }
@@ -71,19 +71,19 @@
 }
 
 .question-card {
-  @apply rounded-b-2xl bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 py-8;
+  @apply rounded-b-2xl bg-primary/10 backdrop-blur-lg border border-primary/20 shadow-xl transition-all duration-300 py-8;
 }
 
 .option-button {
   @apply relative w-full py-3 px-4 md:px-2 text-left rounded-xl transition-all duration-300 
-         border border-gray-200/10 hover:border-primary/50
+         border border-primary/20 hover:border-primary/70
          bg-white/5 backdrop-blur-sm
-         hover:bg-white/10 hover:shadow-lg
+         hover:bg-primary/20 hover:shadow-lg hover:shadow-primary/20
          focus:outline-none focus:ring-2 focus:ring-primary/50;
 }
 
 .option-button.selected {
-  @apply border-primary bg-primary/10 shadow-lg;
+  @apply border-primary bg-primary/30 shadow-lg shadow-primary/30;
 }
 
 .progress-bar {

@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { QuestionForm } from "@/components/QuestionForm";
 import Swal from 'sweetalert2';
 import { getLanguage, translations } from "@/utils/languageUtils";
+import logoImage from "@/assets/logo-mi-dulce-valiente.jpeg";
 
 // Carga Stripe.js con tu clave pública
 const stripePromise = loadStripe('pk_live_51R5DwlGGFTbfvYzkNUhIFLBwk2ZcBKSrO7Ij69odcyYJFLo8dDxBbbNhiS0XulGYSjMzpsvzQXGgBOtEEdOID56S00DF3D33xt');
@@ -210,14 +211,17 @@ export const ResultScreen = ({ score, onClose, additionalParam = null }) => {
     <div className="relative flex flex-col md:flex-row min-h-screen max-h-screen overflow-y-auto pl-3 md:pl-[30px] bg-neutral-900">
       <button
         onClick={handleClose}
-        className="absolute top-4 right-4 z-10 text-white text-xl font-bold bg-red-700 hover:bg-red-800 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-300"
+        className="absolute top-4 right-4 z-10 text-white text-xl font-bold bg-primary hover:bg-primary/90 rounded-full w-8 h-8 flex items-center justify-center transition-all duration-300"
         aria-label="Cerrar"
       >
         ✕
       </button>
 
       <div className="w-full md:w-[30%] pr-4 flex flex-col items-center">
-        <h2 className="text-5xl font-bold mb-4 pt-8 text-white text-center">
+        <div className="flex justify-center mb-4 mt-8">
+          <img src={logoImage} alt="Mi Dulce Valiente" className="h-20 md:h-24 object-contain" />
+        </div>
+        <h2 className="text-5xl font-bold mb-4 text-white text-center">
           {t.title}
         </h2>
         <div className="text-8xl font-bold mb-6 text-white text-center">
@@ -236,7 +240,7 @@ export const ResultScreen = ({ score, onClose, additionalParam = null }) => {
             </p>
             <div className="flex justify-center mb-4">
               <Button
-                className="py-4 px-6 text-xl font-bold bg-red-700 hover:bg-red-800 text-white rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-700/30 flex items-center justify-center"
+                className="py-4 px-6 text-xl font-bold bg-primary hover:bg-primary/90 text-white rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/30 flex items-center justify-center"
                 onClick={formData.paid ? handleChangeAnswers : handlePayment}
                 disabled={loading}
               >
@@ -296,7 +300,7 @@ export const ResultScreen = ({ score, onClose, additionalParam = null }) => {
             </p>
             <div className="flex justify-center mb-4">
               <Button
-                className="py-4 px-6 text-xl md:text-xl font-bold bg-red-700 hover:bg-red-800 text-white rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-700/30 flex items-center justify-center"
+                className="py-4 px-6 text-xl md:text-xl font-bold bg-primary hover:bg-primary/90 text-white rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/30 flex items-center justify-center"
                 onClick={formData.paid ? handleChangeAnswers : handlePayment}
                 disabled={loading}
               >
@@ -328,39 +332,39 @@ export const ResultScreen = ({ score, onClose, additionalParam = null }) => {
 const getAnswerValue = (answer: string): number => {
   // Using the values from 1-5 based on option position
   const optionValues: Record<string, number> = {
-    // Standard options (1-11, 16)
+    // Standard options - Spanish
     "No": 1,
     "Si, pero no se gestiona": 2,
     "Si, pero mal gestionado": 3,
     "Si, solo lo básico": 4,
     "Si, adecuadamente": 5,
     
-    // English translations
+    // Standard options - English
     "Yes, but not managed": 2,
     "Yes, but poorly managed": 3, 
     "Yes, just the basics": 4,
     "Yes, adequately": 5,
     
-    // Security options (12)
+    // Question 12 Security options - Spanish
     "Solo de seguridad y medio ambiente": 2,
     "Solo ciberseguridad": 3,
     "Solo seguridad civil": 4,
     "Solo crisis mediáticas": 5,
     
-    // English translations for security
+    // Question 12 Security options - English
     "Only safety and environment": 2,
     "Only cybersecurity": 3,
     "Only civil security": 4,
     "Only media crises": 5,
     
-    // Training options (13-15)
+    // Questions 13-15 Training options - Spanish
     "Nunca": 1,
     "Solo una vez": 2,
     "Solo casos específicos": 3,
     "Si, solo para el lider (Gerente o dueño)": 4,
     "Si, regularmente para el equipo gerencial": 5,
     
-    // English translations for training
+    // Questions 13-15 Training options - English
     "Never": 1,
     "Only once": 2,
     "Only specific cases": 3,
@@ -368,5 +372,7 @@ const getAnswerValue = (answer: string): number => {
     "Yes, regularly for the management team": 5
   };
 
-  return optionValues[answer] || 0;
+  const value = optionValues[answer] || 0;
+  console.log('Answer:', answer, 'Value:', value); // Debug log
+  return value;
 };

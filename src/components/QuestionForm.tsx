@@ -17,6 +17,7 @@ import {
 } from "./ui/alert-dialog";
 import { getLanguage, translations } from "@/utils/languageUtils";
 import { supabase } from "@/integrations/supabase/client";
+import logoImage from "@/assets/logo-mi-dulce-valiente.jpeg";
 
 export const QuestionForm = ({ userData, onClose, additionalParam = null }) => {
   const lang = getLanguage();
@@ -185,6 +186,9 @@ export const QuestionForm = ({ userData, onClose, additionalParam = null }) => {
 
   return (
     <div className="px-[20px] md:px-[60px] py-[30px] bg-neutral-900 overflow-y-auto">
+      <div className="flex justify-center mb-4">
+        <img src={logoImage} alt="Mi Dulce Valiente" className="h-20 md:h-24 object-contain" />
+      </div>
       <h2 className="text-xl md:text-3xl font-bold mb-4 text-gray-100 text-center">
         {t.title}
       </h2>

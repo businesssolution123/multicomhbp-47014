@@ -286,6 +286,9 @@ const Home = () => {
   return (
     <div className="min-h-screen w-full bg-neutral-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6 space-y-4">
+        <div className="flex justify-center mb-2">
+          <img src="/lovable-uploads/0a2782e3-8ecf-42ea-a71c-75367ca23ca9.png" alt="Mi Dulce Valiente" className="h-16 object-contain" />
+        </div>
         <h2 className="text-xl font-bold mb-4 text-center">
           {t.formTitle}
         </h2>
