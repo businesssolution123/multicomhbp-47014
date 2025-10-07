@@ -14,7 +14,77 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      answers: {
+        Row: {
+          answer_value: number
+          created_at: string | null
+          id: string
+          question_id: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          answer_value: number
+          created_at?: string | null
+          id?: string
+          question_id: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          answer_value?: number
+          created_at?: string | null
+          id?: string
+          question_id?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          city: string
+          company_name: string
+          contact_name: string
+          country: string
+          created_at: string | null
+          email: string
+          id: string
+          phone: string
+          updated_at: string | null
+        }
+        Insert: {
+          city: string
+          company_name: string
+          contact_name: string
+          country: string
+          created_at?: string | null
+          email: string
+          id?: string
+          phone: string
+          updated_at?: string | null
+        }
+        Update: {
+          city?: string
+          company_name?: string
+          contact_name?: string
+          country?: string
+          created_at?: string | null
+          email?: string
+          id?: string
+          phone?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
