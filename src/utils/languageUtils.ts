@@ -32,7 +32,7 @@ export const translations = {
   // QuestionForm translations
   questionForm: {
     es: {
-      title: "¿Su empresa tiene declarado, formalizado y comunicado las siguientes políticas y protocolos?",
+      title: "Responde estas preguntas e indica si estás de acuerdo o no con las siguientes afirmaciones y podrás verte a ti misma desde tus propios ojos.",
       processing: "Procesando resultados...",
       confirmTitle: "Confirmar",
       confirmDescription: "¿Está seguro que desea finalizar y calcular su resultado?",
@@ -40,7 +40,7 @@ export const translations = {
       confirmAction: "Calcular resultado"
     },
     en: {
-      title: "Has your company declared, formalized, and communicated the following policies and protocols?",
+      title: "Answer these questions and indicate whether you agree or disagree with the following statements and you will be able to see yourself through your own eyes.",
       processing: "Processing results...",
       confirmTitle: "Confirm",
       confirmDescription: "Are you sure you want to finish and calculate your result?",
@@ -128,55 +128,21 @@ export const translations = {
   // Question options translations
   questionOptions: {
     es: {
-      // Options for questions 1-11 and 16
       standard: [
-        "No",
-        "Si, pero no se gestiona",
-        "Si, pero mal gestionado",
-        "Si, solo lo básico",
-        "Si, adecuadamente"
-      ],
-      // Options for question 12
-      security: [
-        "No",
-        "Solo de seguridad y medio ambiente",
-        "Solo ciberseguridad",
-        "Solo seguridad civil",
-        "Solo crisis mediáticas"
-      ],
-      // Options for questions 13-15
-      training: [
-        "Nunca",
-        "Solo una vez",
-        "Solo casos específicos",
-        "Si, solo para el lider (Gerente o dueño)",
-        "Si, regularmente para el equipo gerencial"
+        "Totalmente en desacuerdo",
+        "En desacuerdo",
+        "Más o menos de acuerdo",
+        "De acuerdo",
+        "Totalmente de acuerdo"
       ]
     },
     en: {
-      // Options for questions 1-11 and 16
       standard: [
-        "No",
-        "Yes, but not managed",
-        "Yes, but poorly managed",
-        "Yes, just the basics",
-        "Yes, adequately"
-      ],
-      // Options for question 12
-      security: [
-        "No",
-        "Only safety and environment",
-        "Only cybersecurity",
-        "Only civil security",
-        "Only media crises"
-      ],
-      // Options for questions 13-15
-      training: [
-        "Never",
-        "Only once",
-        "Only specific cases",
-        "Yes, only for the leader (Manager or owner)",
-        "Yes, regularly for the management team"
+        "Strongly disagree",
+        "Disagree",
+        "Somewhat agree",
+        "Agree",
+        "Strongly agree"
       ]
     }
   },
@@ -184,40 +150,28 @@ export const translations = {
   // Questions translations
   questions: {
     es: [
-      { id: 1, text: "Relación con los accionistas" },
-      { id: 2, text: "Principios y políticas del gobierno Corporativo?" },
-      { id: 3, text: "Principios y políticas de transparencia" },
-      { id: 4, text: "Principios de Gestión Humana (RRHH)" },
-      { id: 5, text: "Principios y políticas de HSE (Health, Safety and Environment)" },
-      { id: 6, text: "Seguridad y Salud Ocupacional (OSHA)" },
-      { id: 7, text: "Marco de Seguridad cibernética (CSF)" },
-      { id: 8, text: "Cuenta con un Blue Print del servicio o producto?" },
-      { id: 9, text: "Cuenta con un protocolo de gestión de información en redes sociales?" },
-      { id: 10, text: "Cuenta con una Dirección de Comunicación estratégica (DIRCOM)?" },
-      { id: 11, text: "Cuenta con Plan de Comunicación Estratégico?" },
-      { id: 12, text: "Manual de Gestión de Crisis" },
-      { id: 13, text: "Ha entrenado a su equipo gerencial en Vocería y gestiónde medios?" },
-      { id: 14, text: "Ha entrenado a su equipo en Manejo de conflictos?" },
-      { id: 15, text: "Su equipo gerencial tiene un entrenamiento en Alta Gerencia?" },
-      { id: 16, text: "Cuenta con protocolos de gestión de información en medios de comunicación?" }
+      { id: 1, text: "Cuando me miro al espejo me gusta lo que veo porque reconozco y sé quién soy." },
+      { id: 2, text: "No permito que me falten el respeto y me humillen." },
+      { id: 3, text: "Tengo claro cuáles son mis talentos y los uso con seguridad." },
+      { id: 4, text: "Sé lo que no vuelvo a permitir en mi vida, conozco mis no negociables." },
+      { id: 5, text: "Tengo buena relación con mi familia (padre, madre, hermanos)." },
+      { id: 6, text: "Tengo muy buena relación con mis hijos." },
+      { id: 7, text: "Creo que mi pareja es el amor de mi vida, tenemos una muy buena relación." },
+      { id: 8, text: "Soy autosuficiente e independiente económicamente." },
+      { id: 9, text: "Mi alimentación es sana, ordenada y suficiente." },
+      { id: 10, text: "Tengo el hábito de hacer ejercicios regularmente." }
     ],
     en: [
-      { id: 1, text: "Relationship with shareholders" },
-      { id: 2, text: "Corporate governance principles and policies?" },
-      { id: 3, text: "Transparency principles and policies" },
-      { id: 4, text: "Human Resource Management principles (HR)" },
-      { id: 5, text: "HSE principles and policies (Health, Safety and Environment)" },
-      { id: 6, text: "Occupational Safety and Health (OSHA)" },
-      { id: 7, text: "Cybersecurity Framework (CSF)" },
-      { id: 8, text: "Do you have a Blue Print of the service or product?" },
-      { id: 9, text: "Do you have a protocol for managing information on social networks?" },
-      { id: 10, text: "Do you have a Strategic Communication Direction (DIRCOM)?" },
-      { id: 11, text: "Do you have a Strategic Communication Plan?" },
-      { id: 12, text: "Crisis Management Manual" },
-      { id: 13, text: "Have you trained your management team in Spokesperson and media management?" },
-      { id: 14, text: "Have you trained your team in Conflict Management?" },
-      { id: 15, text: "Does your management team have Senior Management training?" },
-      { id: 16, text: "Do you have protocols for managing information in the media?" }
+      { id: 1, text: "When I look in the mirror I like what I see because I recognize and know who I am." },
+      { id: 2, text: "I do not allow myself to be disrespected and humiliated." },
+      { id: 3, text: "I am clear about what my talents are and I use them with confidence." },
+      { id: 4, text: "I know what I will no longer allow in my life, I know my non-negotiables." },
+      { id: 5, text: "I have a good relationship with my family (father, mother, siblings)." },
+      { id: 6, text: "I have a very good relationship with my children." },
+      { id: 7, text: "I believe my partner is the love of my life, we have a very good relationship." },
+      { id: 8, text: "I am self-sufficient and financially independent." },
+      { id: 9, text: "My diet is healthy, orderly and sufficient." },
+      { id: 10, text: "I have the habit of exercising regularly." }
     ]
   }
 };

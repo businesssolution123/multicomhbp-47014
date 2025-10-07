@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResultScreen } from "../components/ResultScreen";
 import { getLanguage, translations } from "@/utils/languageUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ContactForm {
+  id?: string;
   companyName: string;
   country: string;
   city: string;
@@ -121,17 +123,95 @@ const Home = () => {
   };
 
   const handleStart = async () => {
-    await checkUserPayment(formData.email);
+    setLoading(true);
+    try {
+      // Check if user exists by email
+      const { data: existingUser, error: fetchError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', formData.email)
+        .maybeSingle();
 
-    if (formData.paid) {
-      return;
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        console.error('Error fetching user:', fetchError);
+        setError('Error al verificar el usuario. Por favor, intenta de nuevo.');
+        setLoading(false);
+        return;
+      }
+
+      let userId = existingUser?.id;
+
+      if (existingUser) {
+        // User exists, load their answers
+        const { data: userAnswers, error: answersError } = await supabase
+          .from('answers')
+          .select('*')
+          .eq('user_id', existingUser.id);
+
+        if (answersError) {
+          console.error('Error fetching answers:', answersError);
+        }
+
+        // If user has answers, calculate score and go to results
+        if (userAnswers && userAnswers.length > 0) {
+          const avgScore = userAnswers.reduce((sum, a) => sum + a.answer_value, 0) / userAnswers.length;
+          const updatedData = {
+            id: existingUser.id,
+            companyName: existingUser.company_name,
+            country: existingUser.country,
+            city: existingUser.city,
+            contactName: existingUser.contact_name,
+            email: existingUser.email,
+            phone: existingUser.phone,
+            phonePrefix: '',
+            score: avgScore,
+            paid: false
+          };
+          setFormData(updatedData);
+          setUserData(updatedData);
+          localStorage.setItem('contactFormData', JSON.stringify(updatedData));
+          setLoading(false);
+          return;
+        }
+      } else {
+        // Create new user
+        const newUserData = {
+          company_name: formData.companyName,
+          country: formData.country,
+          city: formData.city,
+          contact_name: formData.contactName,
+          email: formData.email,
+          phone: phonePrefix + formData.phone
+        };
+
+        const { data: createdUser, error: createError } = await supabase
+          .from('users')
+          .insert([newUserData])
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Error creating user:', createError);
+          setError('Error al crear el usuario. Por favor, intenta de nuevo.');
+          setLoading(false);
+          return;
+        }
+
+        userId = createdUser.id;
+      }
+
+      setUserData({
+        ...formData,
+        id: userId,
+        phone: phonePrefix + formData.phone,
+      });
+      setShowQuestionForm(true);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Error al procesar la solicitud. Por favor, intenta de nuevo.');
+    } finally {
+      setLoading(false);
     }
-
-    setUserData({
-      ...formData,
-      phone: phonePrefix + formData.phone,
-    });
-    setShowQuestionForm(true);
   };
 
   const handleCloseResultScreen = () => {

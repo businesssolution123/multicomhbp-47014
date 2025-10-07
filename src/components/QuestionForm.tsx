@@ -16,6 +16,7 @@ import {
   AlertDialogTitle
 } from "./ui/alert-dialog";
 import { getLanguage, translations } from "@/utils/languageUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 export const QuestionForm = ({ userData, onClose, additionalParam = null }) => {
   const lang = getLanguage();
@@ -69,37 +70,26 @@ export const QuestionForm = ({ userData, onClose, additionalParam = null }) => {
       if (elapsed < duration) {
         requestAnimationFrame(updateProgress);
       } else {
-        const formattedDate = formatDateInSpanish();
-        
-        const transformedData = answers.map(q => ({
-          question: q.text,
-          answer: q.answer,
-          score: getAnswerValue(q.answer, q.id)
-        }));
-
-        const resultData = {
-          user: userData,
-          date: formattedDate,
-          data: transformedData,
-          additional_param: additionalParam
-        };
-
         try {
-          await fetch('https://hook.us1.make.com/i6kkofyd2cg66d9jr90unyymp5hlyqvj', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(resultData),
-          })
-            .then(response => {
-              if (!response.ok) {
-                console.error('Error al enviar al webhook:', response.status);
-              }
-            })
-            .catch(error => console.error('Error en la solicitud:', error));
+          // Save answers to Supabase
+          const answerValues = answers.map(q => ({
+            user_id: userData.id,
+            question_id: q.id,
+            answer_value: getAnswerValue(q.answer, q.id)
+          }));
+
+          const { error } = await supabase
+            .from('answers')
+            .upsert(answerValues, { 
+              onConflict: 'user_id,question_id',
+              ignoreDuplicates: false 
+            });
+
+          if (error) {
+            console.error('Error saving answers:', error);
+          }
         } catch (error) {
-          console.error('Error al procesar la solicitud:', error);
+          console.error('Error processing results:', error);
         }
 
         setIsProcessing(false);
@@ -133,49 +123,19 @@ export const QuestionForm = ({ userData, onClose, additionalParam = null }) => {
   };
 
   const getAnswerValue = (answer: string, questionId: number): number => {
-    if (questionId === 12) {
-      const values: { [key: string]: number } = {
-        [translations.questionOptions.es.security[0]]: 1,
-        [translations.questionOptions.es.security[1]]: 2,
-        [translations.questionOptions.es.security[2]]: 3,
-        [translations.questionOptions.es.security[3]]: 4,
-        [translations.questionOptions.es.security[4]]: 5,
-        [translations.questionOptions.en.security[0]]: 1,
-        [translations.questionOptions.en.security[1]]: 2,
-        [translations.questionOptions.en.security[2]]: 3,
-        [translations.questionOptions.en.security[3]]: 4,
-        [translations.questionOptions.en.security[4]]: 5
-      };
-      return values[answer] || 0;
-    } else if (questionId >= 13 && questionId <= 15) {
-      const values: { [key: string]: number } = {
-        [translations.questionOptions.es.training[0]]: 1,
-        [translations.questionOptions.es.training[1]]: 2,
-        [translations.questionOptions.es.training[2]]: 3,
-        [translations.questionOptions.es.training[3]]: 4,
-        [translations.questionOptions.es.training[4]]: 5,
-        [translations.questionOptions.en.training[0]]: 1,
-        [translations.questionOptions.en.training[1]]: 2,
-        [translations.questionOptions.en.training[2]]: 3,
-        [translations.questionOptions.en.training[3]]: 4,
-        [translations.questionOptions.en.training[4]]: 5
-      };
-      return values[answer] || 0;
-    } else {
-      const values: { [key: string]: number } = {
-        [translations.questionOptions.es.standard[0]]: 1,
-        [translations.questionOptions.es.standard[1]]: 2,
-        [translations.questionOptions.es.standard[2]]: 3,
-        [translations.questionOptions.es.standard[3]]: 4,
-        [translations.questionOptions.es.standard[4]]: 5,
-        [translations.questionOptions.en.standard[0]]: 1,
-        [translations.questionOptions.en.standard[1]]: 2,
-        [translations.questionOptions.en.standard[2]]: 3,
-        [translations.questionOptions.en.standard[3]]: 4,
-        [translations.questionOptions.en.standard[4]]: 5
-      };
-      return values[answer] || 0;
-    }
+    const values: { [key: string]: number } = {
+      [translations.questionOptions.es.standard[0]]: 1,
+      [translations.questionOptions.es.standard[1]]: 2,
+      [translations.questionOptions.es.standard[2]]: 3,
+      [translations.questionOptions.es.standard[3]]: 4,
+      [translations.questionOptions.es.standard[4]]: 5,
+      [translations.questionOptions.en.standard[0]]: 1,
+      [translations.questionOptions.en.standard[1]]: 2,
+      [translations.questionOptions.en.standard[2]]: 3,
+      [translations.questionOptions.en.standard[3]]: 4,
+      [translations.questionOptions.en.standard[4]]: 5
+    };
+    return values[answer] || 0;
   };
 
   const calculateScore = () => {

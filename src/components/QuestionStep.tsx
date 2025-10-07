@@ -32,15 +32,9 @@ export const QuestionStep = ({
     return null;
   }
 
-  const getOptionsForQuestion = (questionId: number) => {
-    if (questionId === 12) {
-      return t.security;
-    } else if (questionId >= 13 && questionId <= 15) {
-      return t.training;
-    } else {
-      // Questions 1-11 and 16 use the same options
-      return t.standard;
-    }
+  // All questions use the same options now
+  const getOptionsForQuestion = () => {
+    return t.standard;
   };
 
   return (
@@ -61,7 +55,7 @@ export const QuestionStep = ({
         >
           <h3 className="text-lg font-medium text-gray-100 px-6 mb-6">{question.text}</h3>
           <div className="space-y-2 px-4 md:px-8">
-            {getOptionsForQuestion(question.id).map((option, index) => (
+            {getOptionsForQuestion().map((option, index) => (
               <motion.button 
                 key={index} 
                 onClick={() => handleOptionClick(question.id, option)} 
